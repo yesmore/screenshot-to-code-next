@@ -23,19 +23,20 @@ export function generateCode(
   onStatusUpdate: (status: string) => void,
   onComplete: () => void
 ) {
-
   const wsUrl = `ws://localhost:9000`;
+  // const wsUrl = `wss://service-cav5mava-1253530766.gz.tencentapigw.com/release/`;
   console.log("Connecting to backend @ ", wsUrl);
 
   const ws = new WebSocket(wsUrl);
   wsRef.current = ws;
 
   ws.addEventListener("open", () => {
-  
-    ws.send(JSON.stringify({
-      event: 'generatecode',
-      data: params,
-    }));
+    ws.send(
+      JSON.stringify({
+        event: "generatecode",
+        data: params,
+      })
+    );
   });
 
   ws.addEventListener("message", async (event: MessageEvent) => {

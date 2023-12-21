@@ -32,8 +32,9 @@ import { History } from "./components/history/history_types";
 import HistoryDisplay from "./components/history/HistoryDisplay";
 import { extractHistoryTree } from "./components/history/utils";
 import toast from "react-hot-toast";
-import PromptPanel from './components/PromptPanel';
-import Whiteboard from './components/Whiteboard';
+import PromptPanel from "./components/PromptPanel";
+import Whiteboard from "./components/Whiteboard";
+import NativePreview from "./components/NativeMobile";
 
 const IS_OPENAI_DOWN = false;
 
@@ -45,8 +46,8 @@ function App() {
   const [executionConsole, setExecutionConsole] = useState<string[]>([]);
   const [updateInstruction, setUpdateInstruction] = useState("");
 
-  const [showWhiteboardDialog, setShowWhiteboardDialog] = useState<boolean>(false);
-
+  const [showWhiteboardDialog, setShowWhiteboardDialog] =
+    useState<boolean>(false);
 
   // Settings
   const [settings, setSettings] = usePersistedState<Settings>(
@@ -61,7 +62,7 @@ function App() {
       isTermOfServiceAccepted: false,
       accessCode: null,
       mockAiResponse: false,
-      promptCode: '',
+      promptCode: "",
     },
     "setting"
   );
@@ -86,7 +87,6 @@ function App() {
         generatedCodeConfig: GeneratedCodeConfig.HTML_TAILWIND,
       }));
     }
-    
   }, [settings.generatedCodeConfig, setSettings]);
 
   const takeScreenshot = async (): Promise<string> => {
@@ -128,8 +128,8 @@ function App() {
   };
 
   const closeWhiteboardDialog = () => {
-    setShowWhiteboardDialog(false)
-  }
+    setShowWhiteboardDialog(false);
+  };
 
   const stop = () => {
     wsRef.current?.close?.(USER_CLOSE_WEB_SOCKET_CODE);
@@ -253,7 +253,6 @@ function App() {
     setUpdateInstruction("");
   }
 
-
   return (
     <div className="mt-2 dark:bg-black dark:text-white">
       <div className="lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:w-96 lg:flex-col">
@@ -261,33 +260,30 @@ function App() {
           <div className="flex items-center justify-between mt-5 mb-2">
             <h1 className="text-2xl ">Ant CodeAI</h1>
             <div className="flex">
-            {appState === AppState.CODE_READY && (
-              <>
-                <span
+              {appState === AppState.CODE_READY && (
+                <>
+                  <span
                     onClick={reset}
-                    className="hover:bg-slate-200 p-2 rounded-sm"                  >
+                    className="hover:bg-slate-200 p-2 rounded-sm">
                     <FaUndo />
                     {/* Reset */}
-                </span>
-                <span
-                  onClick={downloadCode}
-                  className="hover:bg-slate-200 p-2 rounded-sm"
-                >
-                  <FaDownload />
-                </span>
-              </>
-          
-            )}
+                  </span>
+                  <span
+                    onClick={downloadCode}
+                    className="hover:bg-slate-200 p-2 rounded-sm">
+                    <FaDownload />
+                  </span>
+                </>
+              )}
               <span
                 onClick={() => setShowWhiteboardDialog(true)}
-                className="hover:bg-slate-200 p-2 rounded-sm"
-              >
+                className="hover:bg-slate-200 p-2 rounded-sm">
                 <FaPencilRuler />
               </span>
               <SettingsDialog settings={settings} setSettings={setSettings} />
             </div>
           </div>
-     
+
           <OutputSettingsSection
             generatedCodeConfig={settings.generatedCodeConfig}
             setGeneratedCodeConfig={(config: GeneratedCodeConfig) =>
@@ -300,7 +296,6 @@ function App() {
               appState === AppState.CODING || appState === AppState.CODE_READY
             }
           />
-        
 
           {IS_RUNNING_ON_CLOUD &&
             !(settings.openAiApiKey || settings.accessCode) && (
@@ -327,8 +322,7 @@ function App() {
                   <div className="flex mt-4 w-full">
                     <Button
                       onClick={stop}
-                      className="w-full dark:text-white dark:bg-gray-700"
-                    >
+                      className="w-full dark:text-white dark:bg-gray-700">
                       Stop
                     </Button>
                   </div>
@@ -356,8 +350,7 @@ function App() {
                     </div>
                     <Button
                       onClick={doUpdate}
-                      className="dark:text-white dark:bg-gray-700"
-                    >
+                      className="dark:text-white dark:bg-gray-700">
                       Update
                     </Button>
                   </div>
@@ -370,8 +363,7 @@ function App() {
                   <div
                     className={classNames({
                       "scanning relative": appState === AppState.CODING,
-                    })}
-                  >
+                    })}>
                     <img
                       className="w-[340px] border border-gray-200 rounded-md"
                       src={referenceImages[0]}
@@ -389,8 +381,7 @@ function App() {
                   {executionConsole.map((line, index) => (
                     <div
                       key={index}
-                      className="border-b border-gray-400 mb-2 text-gray-600 font-mono"
-                    >
+                      className="border-b border-gray-400 mb-2 text-gray-600 font-mono">
                       {line}
                     </div>
                   ))}
@@ -432,27 +423,50 @@ function App() {
 
         {(appState === AppState.CODING || appState === AppState.CODE_READY) && (
           <div className="ml-4">
-            <Tabs defaultValue="desktop">
+            <Tabs
+              defaultValue={
+                settings.generatedCodeConfig == GeneratedCodeConfig.REACT_NATIVE
+                  ? "native"
+                  : "desktop"
+              }>
               <div className="flex justify-end mr-8 mb-4">
                 <TabsList>
-                  <TabsTrigger value="desktop" className="flex gap-x-2">
-                    <FaDesktop /> Desktop
-                  </TabsTrigger>
-                  <TabsTrigger value="mobile" className="flex gap-x-2">
-                    <FaMobile /> Mobile
-                  </TabsTrigger>
+                  {settings.generatedCodeConfig ===
+                  GeneratedCodeConfig.REACT_NATIVE ? (
+                    <TabsTrigger value="native" className="flex gap-x-2">
+                      <FaDesktop /> native Mobile
+                    </TabsTrigger>
+                  ) : (
+                    <>
+                      <TabsTrigger value="desktop" className="flex gap-x-2">
+                        <FaDesktop /> Desktop
+                      </TabsTrigger>
+                      <TabsTrigger value="mobile" className="flex gap-x-2">
+                        <FaMobile /> Mobile
+                      </TabsTrigger>
+                    </>
+                  )}
                   <TabsTrigger value="code" className="flex gap-x-2">
                     <FaCode />
                     Code
                   </TabsTrigger>
                 </TabsList>
               </div>
-              <TabsContent value="desktop">
-                <Preview code={generatedCode} device="desktop" />
-              </TabsContent>
-              <TabsContent value="mobile">
-                <Preview code={generatedCode} device="mobile" />
-              </TabsContent>
+              {settings.generatedCodeConfig ===
+              GeneratedCodeConfig.REACT_NATIVE ? (
+                <TabsContent value="native">
+                  <NativePreview code={generatedCode} />
+                </TabsContent>
+              ) : (
+                <>
+                  <TabsContent value="desktop">
+                    <Preview code={generatedCode} device="desktop" />
+                  </TabsContent>
+                  <TabsContent value="mobile">
+                    <Preview code={generatedCode} device="mobile" />
+                  </TabsContent>
+                </>
+              )}
               <TabsContent value="code">
                 <CodeTab
                   code={generatedCode}
@@ -464,13 +478,14 @@ function App() {
           </div>
         )}
       </main>
-      <div className={classNames(
-        "fixed top-0 z-[1000] w-full h-full",
-        {
-          "hidden": !showWhiteboardDialog,
-        }
-      )}>
-        <Whiteboard closeWhiteboardDialog={closeWhiteboardDialog} doCreate={doCreate}/>
+      <div
+        className={classNames("fixed top-0 z-[1000] w-full h-full", {
+          hidden: !showWhiteboardDialog,
+        })}>
+        <Whiteboard
+          closeWhiteboardDialog={closeWhiteboardDialog}
+          doCreate={doCreate}
+        />
       </div>
     </div>
   );

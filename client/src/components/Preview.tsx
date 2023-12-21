@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 import classNames from "classnames";
 import useThrottle from "../hooks/useThrottle";
 
@@ -8,7 +8,7 @@ interface Props {
 }
 
 function Preview({ code, device }: Props) {
-  const throttledCode = useThrottle(code, 200);
+  const throttledCode = useThrottle(code, 500);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
 
   useEffect(() => {
@@ -33,8 +33,7 @@ function Preview({ code, device }: Props) {
             "w-full h-[700px]": device === "desktop",
             "w-[400px] h-[700px]": device === "mobile",
           }
-        )}
-      ></iframe>
+        )}></iframe>
     </div>
   );
 }

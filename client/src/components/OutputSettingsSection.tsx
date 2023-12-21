@@ -23,6 +23,13 @@ function generateDisplayComponent(config: GeneratedCodeConfig) {
           <span className="font-semibold">Tailwind</span>
         </div>
       );
+    case GeneratedCodeConfig.REACT_NATIVE:
+      return (
+        <div>
+          <span className="font-semibold">react</span> +{" "}
+          <span className="font-semibold">native</span>
+        </div>
+      );
     case GeneratedCodeConfig.REACT_TAILWIND:
       return (
         <div>
@@ -52,7 +59,7 @@ function generateDisplayComponent(config: GeneratedCodeConfig) {
           <span className="text-orange-600 ml-[20px]">Beta</span>
         </div>
       );
-      // VUE_TAILWIND 
+    // VUE_TAILWIND
     // case GeneratedCodeConfig.IONIC_TAILWIND:
     //   return (
     //     <div>
@@ -86,8 +93,7 @@ function OutputSettingsSection({
           onValueChange={(value: string) =>
             setGeneratedCodeConfig(value as GeneratedCodeConfig)
           }
-          disabled={shouldDisableUpdates}
-        >
+          disabled={shouldDisableUpdates}>
           <SelectTrigger className="col-span-2" id="output-settings-js">
             {generateDisplayComponent(generatedCodeConfig)}
           </SelectTrigger>
@@ -98,6 +104,9 @@ function OutputSettingsSection({
               </SelectItem>
               <SelectItem value={GeneratedCodeConfig.HTML_TAILWIND}>
                 {generateDisplayComponent(GeneratedCodeConfig.HTML_TAILWIND)}
+              </SelectItem>
+              <SelectItem value={GeneratedCodeConfig.REACT_NATIVE}>
+                {generateDisplayComponent(GeneratedCodeConfig.REACT_NATIVE)}
               </SelectItem>
               <SelectItem value={GeneratedCodeConfig.REACT_TAILWIND}>
                 {generateDisplayComponent(GeneratedCodeConfig.REACT_TAILWIND)}
