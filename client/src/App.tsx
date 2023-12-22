@@ -297,11 +297,6 @@ function App() {
             }
           />
 
-          {IS_RUNNING_ON_CLOUD &&
-            !(settings.openAiApiKey || settings.accessCode) && (
-              <OnboardingNote />
-            )}
-
           {IS_OPENAI_DOWN && (
             <div className="bg-black text-white dark:bg-white dark:text-black p-3 rounded">
               OpenAI API is currently down. Try back in 30 minutes or later. We
@@ -455,7 +450,7 @@ function App() {
               {settings.generatedCodeConfig ===
               GeneratedCodeConfig.REACT_NATIVE ? (
                 <TabsContent value="native">
-                  <NativePreview code={generatedCode} />
+                  <NativePreview code={generatedCode} appState={appState} />
                 </TabsContent>
               ) : (
                 <>
@@ -487,6 +482,11 @@ function App() {
           doCreate={doCreate}
         />
       </div>
+      {IS_RUNNING_ON_CLOUD && !settings.openAiApiKey && (
+        <div className="fixed left-[20px] bottom-[20px] z-[1000]">
+          <OnboardingNote />
+        </div>
+      )}
     </div>
   );
 }
