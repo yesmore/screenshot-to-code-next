@@ -1,16 +1,17 @@
 import OpenAI from 'openai';
 
 export async function streamingOpenAIResponses(messages, callback, params) {
-  if (!params.openAiApiKey) {
+  if (!params.openAiApiKey && !process.env['OPENAI_API_KEY']) {
     callback('No openai key', 'error');
     return '';
   }
+
   const openai = new OpenAI({
     apiKey: params.openAiApiKey || process.env['OPENAI_API_KEY'], // defaults to process.env["OPENAI_API_KEY"]
     baseURL:
       params.openAiBaseURL ||
       process.env['OPENAI_BASE_URL'] ||
-      'https://api.gptapi.us/v1',
+      'https://api.openai.com/v1',
   });
 
   const stream = await openai.chat.completions.create({
