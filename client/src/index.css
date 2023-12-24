@@ -61,7 +61,7 @@
 
     --radius: 0.5rem;
   }
-  
+
   body.dark {
     background-color: black;
   }
@@ -71,7 +71,7 @@
   }
 
   iframe {
-    background-color: white !important; 
+    background-color: white !important;
   }
 
   .dark {
@@ -114,11 +114,11 @@
   }
 }
 
-.excalidraw-modal-container{
+.excalidraw-modal-container {
   pointer-events: auto;
 }
 
-.excalidraw .layer-ui__wrapper__top-right{
+.excalidraw .layer-ui__wrapper__top-right {
   margin-right: 60px;
 }
 /* 隐藏excalidraw links*/
@@ -126,15 +126,28 @@
   display: none;
 }
 
-html{
+html {
   height: 100% !important;
 }
-body{
+body {
   height: 100% !important;
 }
-#root{
+#root {
   height: 100%;
 }
-.container{
+.container {
   padding: 0 !important;
+}
+
+*::-webkit-scrollbar {
+  width: 0px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: hsla(215, 10%, 77%, 0);
+  border-radius: 4px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: hsla(0, 0%, 59%, 0.524);
 }

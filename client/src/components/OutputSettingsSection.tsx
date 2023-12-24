@@ -87,7 +87,7 @@ function OutputSettingsSection({
   return (
     <div className="flex flex-col gap-y-2 justify-between text-sm">
       <div className="grid grid-cols-3 items-center gap-4">
-        <span>技术栈:</span>
+        <h1 className=" text-slate-500 font-bold text-sm">选择技术栈</h1>
         <Select
           value={generatedCodeConfig}
           onValueChange={(value: string) =>
