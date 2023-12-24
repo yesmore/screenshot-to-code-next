@@ -50,13 +50,13 @@ export function PromptProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cookie = window.localStorage.getItem("promptData");
 
-    if (cookie) {
-      let cookieObject: PromptState = JSON.parse(cookie);
-      setPromptList(cookieObject.promptList);
-      console.log("cookie", cookieObject.promptList);
-    } else {
-      setPromptList(InitPromptData.promptList);
-    }
+    // if (cookie) {
+    //   let cookieObject: PromptState = JSON.parse(cookie);
+    //   setPromptList(cookieObject.promptList);
+    // } else {
+
+    // }
+    setPromptList(InitPromptData.promptList);
   }, []);
 
   function addPrompt(prompt: PromptType) {

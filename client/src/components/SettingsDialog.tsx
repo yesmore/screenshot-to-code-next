@@ -22,7 +22,7 @@ interface Props {
 function SettingsDialog({ settings, setSettings }: Props) {
   return (
     <Dialog>
-      <DialogTrigger className="hover:bg-slate-200 rounded-sm pl-2 pr-2">
+      <DialogTrigger className="hover:bg-slate-200 rounded-sm p-2">
         <FaCog />
       </DialogTrigger>
       <DialogContent>
@@ -49,12 +49,22 @@ function SettingsDialog({ settings, setSettings }: Props) {
           />
         </div> */}
         <div className="flex flex-col space-y-4">
+          <div className="space-y-4 bg-slate-200 p-4 rounded dark:text-white dark:bg-slate-800">
+            🎉 每日提供 <strong>$2</strong> 额度免费使用，需要更多额度请前往{" "}
+            <a
+              className=" text-cyan-600 font-bold"
+              href="https://open.taoist.fun"
+              target="__blank">
+              Taoist API
+            </a>
+            .
+          </div>
           <Label htmlFor="openai-api-key">
             <div className=" text-slate-600 font-bold">OpenAI API key</div>
             <div className="font-light mt-2 leading-relaxed">
               仅存储在你的本地浏览器中。没有 GPT-4 Key ? 试试{" "}
               <a
-                className=" text-cyan-500 font-bold"
+                className=" text-cyan-600 font-bold"
                 href="https://open.taoist.fun"
                 target="__blank">
                 Taoist API

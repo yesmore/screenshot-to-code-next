@@ -83,8 +83,9 @@ function PromptPanel({ settings, setSettings }: Props) {
   };
 
   return (
-    <div className="relative">
-      <div className="grid grid-cols-2 gap-4 border-t my-2 py-4">
+    <div className="relative border-t mt-2 py-2">
+      <h1 className=" text-slate-500 font-bold">预设列表</h1>
+      <div className="grid grid-cols-2 gap-4 my-2">
         {promptList.map((prompt) => {
           if (prompt.type === settings.generatedCodeConfig) {
             return (

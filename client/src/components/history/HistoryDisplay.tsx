@@ -57,8 +57,7 @@ export default function HistoryDisplay({
                         "Please wait for code generation to complete before viewing an older version."
                       )
                     : revertToVersion(index)
-                }
-              >
+                }>
                 {" "}
                 <div className="flex gap-x-1 truncate">
                   <h2 className="text-sm truncate">
@@ -75,10 +74,10 @@ export default function HistoryDisplay({
                 <h2 className="text-sm">v{index + 1}</h2>
               </HoverCardTrigger>
               <HoverCardContent>
-                <div>
+                <div className=" flex items-center gap-1">
+                  <Badge>{displayHistoryItemType(item.type)}</Badge>{" "}
                   {item.type === "ai_edit" ? item.inputs.prompt : "Create"}
                 </div>
-                <Badge>{displayHistoryItemType(item.type)}</Badge>
               </HoverCardContent>
             </HoverCard>
           </li>
