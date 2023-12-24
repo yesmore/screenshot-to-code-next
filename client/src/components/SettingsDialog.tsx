@@ -20,12 +20,10 @@ interface Props {
 }
 
 function SettingsDialog({ settings, setSettings }: Props) {
-
-
   return (
     <Dialog>
       <DialogTrigger className="hover:bg-slate-200 rounded-sm pl-2 pr-2">
-          <FaCog />
+        <FaCog />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -52,10 +50,16 @@ function SettingsDialog({ settings, setSettings }: Props) {
         </div> */}
         <div className="flex flex-col space-y-4">
           <Label htmlFor="openai-api-key">
-            <div>OpenAI API key</div>
+            <div className=" text-slate-600 font-bold">OpenAI API key</div>
             <div className="font-light mt-2 leading-relaxed">
-              Only stored in your browser. Never stored on servers. Overrides
-              your .env config.
+              仅存储在你的本地浏览器中。没有 GPT-4 Key ? 试试{" "}
+              <a
+                className=" text-cyan-500 font-bold"
+                href="https://open.taoist.fun"
+                target="__blank">
+                Taoist API
+              </a>
+              &nbsp;代理，限时超低比例充值，支持 GPT-4 Vision 模型
             </div>
           </Label>
 
@@ -71,12 +75,15 @@ function SettingsDialog({ settings, setSettings }: Props) {
             }
           />
 
-          {(
+          {
             <>
               <Label htmlFor="openai-api-key">
-                <div>OpenAI Base URL (optional)</div>
+                <div className=" text-slate-600 font-bold">
+                  OpenAI Base URL (可选)
+                </div>
                 <div className="font-light mt-2 leading-relaxed">
-                  Replace with a proxy URL if you don't want to use the default.
+                  如果不想使用默认URL，请替换为代理URL，如
+                  https://api.openai.com/v1 或 https://open.taoist.fun/v1
                 </div>
               </Label>
 
@@ -92,15 +99,13 @@ function SettingsDialog({ settings, setSettings }: Props) {
                 }
               />
             </>
-          )}
+          }
         </div>
 
         <div className="flex items-center space-x-2">
           <Label htmlFor="image-generation">
-            <div>mock AI response</div>
-            <div className="font-light mt-2">
-              mock AI response
-            </div>
+            <div className=" text-slate-600 font-bold">mock AI response</div>
+            <div className="font-light mt-2">模拟 AI 生成响应数据</div>
           </Label>
           <Switch
             id="image-generation"

@@ -23,7 +23,6 @@ import { Settings, EditorTheme, AppState, GeneratedCodeConfig } from "./types";
 import { IS_RUNNING_ON_CLOUD } from "./config";
 import { OnboardingNote } from "./components/OnboardingNote";
 import { usePersistedState } from "./hooks/usePersistedState";
-// import { UrlInputSection } from "./components/UrlInputSection";
 import html2canvas from "html2canvas";
 import { USER_CLOSE_WEB_SOCKET_CODE } from "./constants";
 import CodeTab from "./components/CodeTab";
@@ -35,6 +34,7 @@ import toast from "react-hot-toast";
 import PromptPanel from "./components/PromptPanel";
 import Whiteboard from "./components/Whiteboard";
 import NativePreview from "./components/NativeMobile";
+import { UrlInputSection } from "./components/UrlInputSection";
 
 const IS_OPENAI_DOWN = false;
 

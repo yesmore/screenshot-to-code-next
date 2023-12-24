@@ -1,13 +1,13 @@
-import {GeneratedCodeConfig} from '../types'
+import { GeneratedCodeConfig } from "../types";
 
 export default {
-    promptList: [
-        {
-            id: '64671b07-32e1-429c-83c1-0a4a17d0ece0',
-            name: 'row form',
-            des: 'This is row form',
-            imgUrl: 'https://s11.ax1x.com/2023/12/13/pifbBHe.png',
-            prompt: `
+  promptList: [
+    {
+      id: "64671b07-32e1-429c-83c1-0a4a17d0ece0",
+      name: "row form",
+      des: "This is row form",
+      imgUrl: "https://s11.ax1x.com/2023/12/13/pifbBHe.png",
+      prompt: `
 Refer to the following code format to output the screenshot code.
 
 <html>
@@ -148,14 +148,14 @@ Refer to the following code format to output the screenshot code.
 </body>
 </html>
             `,
-            type: GeneratedCodeConfig.REACT_ANTD,
-        },
-        {
-            id: '64671b07-32e1-429c-83c1-0a4a17dkkce0',
-            name: 'table edit',
-            des: 'table edit',
-            imgUrl: 'https://s11.ax1x.com/2023/12/14/pihfGPf.png',
-            prompt: `
+      type: GeneratedCodeConfig.REACT_ANTD,
+    },
+    {
+      id: "64671b07-32e1-429c-83c1-0a4a17dkkce0",
+      name: "table edit",
+      des: "table edit",
+      imgUrl: "https://s11.ax1x.com/2023/12/14/pihfGPf.png",
+      prompt: `
             - Refer to example code format to output the screenshot code.
             - Add logical code for operation columns
             - If there is an edit in the operation, add form logic according to the example code
@@ -356,8 +356,7 @@ Refer to the following code format to output the screenshot code.
             </body>
             </html>            
             `,
-            type: GeneratedCodeConfig.REACT_ANTD,
-        }
-    ],
-    
-}
+      type: GeneratedCodeConfig.REACT_ANTD,
+    },
+  ],
+};

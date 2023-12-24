@@ -143,9 +143,9 @@ function ImageUpload({ setReferenceImages }: Props) {
       <div {...getRootProps({ style: style as any })}>
         <input {...getInputProps()} />
         <p className="text-slate-700 text-lg">
-          Drag & drop a screenshot here, <br />
-          or paste from clipboard, <br />
-          or click to upload
+          将屏幕截图拖放到此处, <br />
+          或单击上传本地图片, <br />
+          或从剪贴板粘贴
         </p>
       </div>
     </section>

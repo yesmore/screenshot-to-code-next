@@ -42,7 +42,7 @@ function generateDisplayComponent(config: GeneratedCodeConfig) {
           <span className="font-semibold">react</span> +{" "}
           <span className="font-semibold">antd</span>
         </div>
-      );  
+      );
     case GeneratedCodeConfig.VUE_TAILWIND:
       return (
         <div>
@@ -87,7 +87,7 @@ function OutputSettingsSection({
   return (
     <div className="flex flex-col gap-y-2 justify-between text-sm">
       <div className="grid grid-cols-3 items-center gap-4">
-        <span>Generating:</span>
+        <span>技术栈:</span>
         <Select
           value={generatedCodeConfig}
           onValueChange={(value: string) =>
