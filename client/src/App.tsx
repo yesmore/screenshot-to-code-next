@@ -253,7 +253,9 @@ function App() {
       <div className="lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:w-96 lg:flex-col">
         <div className="flex grow flex-col gap-y-2 overflow-y-auto border-r border-gray-200 bg-white px-6 dark:bg-zinc-950 dark:text-white">
           <div className="flex items-center justify-between mt-5 mb-2">
-            <h1 className="text-2xl ">截图生成代码</h1>
+            <h1 className="text-2xl font-semibold bg-gradient-to-r from-slate-600 via-slate-500 to-slate-400 bg-clip-text text-transparent">
+              截图生成代码
+            </h1>
             <div className="flex">
               {appState === AppState.CODE_READY && (
                 <>

@@ -145,7 +145,8 @@ function ImageUpload({ setReferenceImages }: Props) {
         <p className="text-slate-700 text-lg">
           将屏幕截图拖放到此处, <br />
           或单击上传本地图片, <br />
-          或从剪贴板粘贴
+          或从剪贴板粘贴, <br />
+          上传图片大小1MB以内
         </p>
       </div>
     </section>

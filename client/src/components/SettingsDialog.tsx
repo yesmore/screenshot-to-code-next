@@ -61,7 +61,7 @@ function SettingsDialog({ settings, setSettings }: Props) {
           </div>
           <Label htmlFor="openai-api-key">
             <div className=" text-slate-600 font-bold">OpenAI API key</div>
-            <div className="font-light mt-2 leading-relaxed">
+            <div className="font-light mt-2 leading-relaxed text-slate-400 text-xs">
               仅存储在你的本地浏览器中。没有 GPT-4 Key ? 试试{" "}
               <a
                 className=" text-cyan-600 font-bold"
@@ -74,6 +74,7 @@ function SettingsDialog({ settings, setSettings }: Props) {
           </Label>
 
           <Input
+            className=" text-slate-400 placeholder:text-slate-400"
             id="openai-api-key"
             placeholder="OpenAI API key"
             value={settings.openAiApiKey || ""}
@@ -91,13 +92,14 @@ function SettingsDialog({ settings, setSettings }: Props) {
                 <div className=" text-slate-600 font-bold">
                   OpenAI Base URL (可选)
                 </div>
-                <div className="font-light mt-2 leading-relaxed">
+                <div className="font-light mt-2 leading-relaxed text-slate-400 text-xs">
                   如果不想使用默认URL，请替换为代理URL，如
                   https://api.openai.com/v1 或 https://open.taoist.fun/v1
                 </div>
               </Label>
 
               <Input
+                className=" text-slate-400 placeholder:text-slate-400"
                 id="openai-base-url"
                 placeholder="OpenAI Base URL"
                 value={settings.openAiBaseURL || ""}
@@ -115,7 +117,9 @@ function SettingsDialog({ settings, setSettings }: Props) {
         <div className="flex items-center space-x-2">
           <Label htmlFor="image-generation">
             <div className=" text-slate-600 font-bold">mock AI response</div>
-            <div className="font-light mt-2">模拟 AI 生成响应数据</div>
+            <div className="font-light mt-2 text-slate-400 text-xs">
+              模拟 AI 生成响应数据
+            </div>
           </Label>
           <Switch
             id="image-generation"
