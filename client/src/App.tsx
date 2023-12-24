@@ -11,7 +11,7 @@ import {
   FaDownload,
   FaMobile,
   FaUndo,
-  FaPencilRuler,
+  FaCloudUploadAlt,
 } from "react-icons/fa";
 
 import { Switch } from "./components/ui/switch";
@@ -45,9 +45,8 @@ function App() {
   const [referenceImages, setReferenceImages] = useState<string[]>([]);
   const [executionConsole, setExecutionConsole] = useState<string[]>([]);
   const [updateInstruction, setUpdateInstruction] = useState("");
-
-  const [showWhiteboardDialog, setShowWhiteboardDialog] =
-    useState<boolean>(false);
+  const [showImageUpload, setShowImageUpload] = useState<boolean>(true);
+  const [showPreview, setShowPreview] = useState<boolean>(true);
 
   // Settings
   const [settings, setSettings] = usePersistedState<Settings>(
@@ -125,10 +124,6 @@ function App() {
     setReferenceImages([]);
     setExecutionConsole([]);
     setAppHistory([]);
-  };
-
-  const closeWhiteboardDialog = () => {
-    setShowWhiteboardDialog(false);
   };
 
   const stop = () => {
@@ -254,7 +249,7 @@ function App() {
   }
 
   return (
-    <div className="mt-2 dark:bg-black dark:text-white">
+    <div className="mt-2 dark:bg-black dark:text-white h-full">
       <div className="lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:w-96 lg:flex-col">
         <div className="flex grow flex-col gap-y-2 overflow-y-auto border-r border-gray-200 bg-white px-6 dark:bg-zinc-950 dark:text-white">
           <div className="flex items-center justify-between mt-5 mb-2">
@@ -275,11 +270,6 @@ function App() {
                   </span>
                 </>
               )}
-              <span
-                onClick={() => setShowWhiteboardDialog(true)}
-                className="hover:bg-slate-200 p-2 rounded-sm">
-                <FaPencilRuler />
-              </span>
               <SettingsDialog settings={settings} setSettings={setSettings} />
             </div>
           </div>
@@ -385,6 +375,16 @@ function App() {
             </>
           )}
           <PromptPanel settings={settings} setSettings={setSettings} />
+          <div className="space-y-4 bg-slate-200 p-4 rounded dark:text-white dark:bg-slate-800">
+            🎉 每日提供 <strong>$2</strong> 额度免费使用，需要更多额度请前往{" "}
+            <a
+              className=" text-cyan-600 font-bold"
+              href="https://open.taoist.fun"
+              target="__blank">
+              Taoist API
+            </a>
+            .
+          </div>
           {
             <HistoryDisplay
               history={appHistory}
@@ -405,9 +405,31 @@ function App() {
         </div>
       </div>
 
-      <main className="py-2 lg:pl-96">
+      <main className="lg:ml-96 relative h-full">
         {appState === AppState.INITIAL && (
-          <div className="flex flex-col justify-center items-center gap-y-10">
+          <div
+            onClick={() => {
+              setShowImageUpload(false);
+            }}>
+            <Whiteboard doCreate={doCreate} />
+          </div>
+        )}
+        {appState === AppState.INITIAL && (
+          <div className="absolute top-48 right-3 z-[10]">
+            <div
+              title="切换模式"
+              onClick={() => setShowImageUpload(!showImageUpload)}
+              className="flex justify-center items-center w-12 h-12 rounded-full ring-1 ring-slate-400/50 hover:bg-slate-200 text-slate-400 size-2 mb-2">
+              <FaCloudUploadAlt />
+            </div>
+          </div>
+        )}
+        {appState === AppState.INITIAL && (
+          <div
+            className={classNames(
+              "absolute left-[50%] -ml-[300px] z-[10] flex flex-col justify-center items-center gap-y-10 w-[600px] top-32",
+              { hidden: !showImageUpload }
+            )}>
             <ImageUpload setReferenceImages={doCreate} />
             {/* <UrlInputSection
               doCreate={doCreate}
@@ -416,72 +438,65 @@ function App() {
           </div>
         )}
 
-        {(appState === AppState.CODING || appState === AppState.CODE_READY) && (
-          <div className="ml-4">
-            <Tabs
-              defaultValue={
-                settings.generatedCodeConfig == GeneratedCodeConfig.REACT_NATIVE
-                  ? "native"
-                  : "desktop"
-              }>
-              <div className="flex justify-end mr-8 mb-4">
-                <TabsList>
-                  {settings.generatedCodeConfig ===
-                  GeneratedCodeConfig.REACT_NATIVE ? (
-                    <TabsTrigger value="native" className="flex gap-x-2">
-                      <FaDesktop /> native Mobile
+        {(appState === AppState.CODING || appState === AppState.CODE_READY) &&
+          showPreview && (
+            <div className="ml-4 absolute top-5 z-[10] w-[80%] ml-[10%]">
+              <Tabs
+                defaultValue={
+                  settings.generatedCodeConfig ==
+                  GeneratedCodeConfig.REACT_NATIVE
+                    ? "native"
+                    : "desktop"
+                }>
+                <div className="flex justify-end mr-8 mb-4">
+                  <TabsList>
+                    {settings.generatedCodeConfig ===
+                    GeneratedCodeConfig.REACT_NATIVE ? (
+                      <TabsTrigger value="native" className="flex gap-x-2">
+                        <FaDesktop /> native Mobile
+                      </TabsTrigger>
+                    ) : (
+                      <>
+                        <TabsTrigger value="desktop" className="flex gap-x-2">
+                          <FaDesktop /> Desktop
+                        </TabsTrigger>
+                        <TabsTrigger value="mobile" className="flex gap-x-2">
+                          <FaMobile /> Mobile
+                        </TabsTrigger>
+                      </>
+                    )}
+                    <TabsTrigger value="code" className="flex gap-x-2">
+                      <FaCode />
+                      Code
                     </TabsTrigger>
-                  ) : (
-                    <>
-                      <TabsTrigger value="desktop" className="flex gap-x-2">
-                        <FaDesktop /> Desktop
-                      </TabsTrigger>
-                      <TabsTrigger value="mobile" className="flex gap-x-2">
-                        <FaMobile /> Mobile
-                      </TabsTrigger>
-                    </>
-                  )}
-                  <TabsTrigger value="code" className="flex gap-x-2">
-                    <FaCode />
-                    Code
-                  </TabsTrigger>
-                </TabsList>
-              </div>
-              {settings.generatedCodeConfig ===
-              GeneratedCodeConfig.REACT_NATIVE ? (
-                <TabsContent value="native">
-                  <NativePreview code={generatedCode} appState={appState} />
+                  </TabsList>
+                </div>
+                {settings.generatedCodeConfig ===
+                GeneratedCodeConfig.REACT_NATIVE ? (
+                  <TabsContent value="native">
+                    <NativePreview code={generatedCode} appState={appState} />
+                  </TabsContent>
+                ) : (
+                  <>
+                    <TabsContent value="desktop">
+                      <Preview code={generatedCode} device="desktop" />
+                    </TabsContent>
+                    <TabsContent value="mobile">
+                      <Preview code={generatedCode} device="mobile" />
+                    </TabsContent>
+                  </>
+                )}
+                <TabsContent value="code">
+                  <CodeTab
+                    code={generatedCode}
+                    setCode={setGeneratedCode}
+                    settings={settings}
+                  />
                 </TabsContent>
-              ) : (
-                <>
-                  <TabsContent value="desktop">
-                    <Preview code={generatedCode} device="desktop" />
-                  </TabsContent>
-                  <TabsContent value="mobile">
-                    <Preview code={generatedCode} device="mobile" />
-                  </TabsContent>
-                </>
-              )}
-              <TabsContent value="code">
-                <CodeTab
-                  code={generatedCode}
-                  setCode={setGeneratedCode}
-                  settings={settings}
-                />
-              </TabsContent>
-            </Tabs>
-          </div>
-        )}
+              </Tabs>
+            </div>
+          )}
       </main>
-      <div
-        className={classNames("fixed top-0 z-[1000] w-full h-full", {
-          hidden: !showWhiteboardDialog,
-        })}>
-        <Whiteboard
-          closeWhiteboardDialog={closeWhiteboardDialog}
-          doCreate={doCreate}
-        />
-      </div>
       {IS_RUNNING_ON_CLOUD && !settings.openAiApiKey && (
         <div className="fixed left-[20px] bottom-[20px] z-[1000]">
           <OnboardingNote />

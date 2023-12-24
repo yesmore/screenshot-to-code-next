@@ -5,14 +5,13 @@ import { Cross2Icon } from "@radix-ui/react-icons";
 
 interface Props {
   doCreate: (urls: string[]) => void;
-  closeWhiteboardDialog: () => void;
 }
 
 const initialData = {
   appState: {},
 };
 
-function Whiteboard({ doCreate, closeWhiteboardDialog }: Props) {
+function Whiteboard({ doCreate }: Props) {
   const [excalidrawAPI, setExcalidrawAPI] = useState(null);
   // const [canvasUrl, setCanvasUrl] = useState("");
 
@@ -36,24 +35,17 @@ function Whiteboard({ doCreate, closeWhiteboardDialog }: Props) {
     });
     // setCanvasUrl(canvas.toDataURL());
     doCreate([canvas.toDataURL()]);
-    closeWhiteboardDialog();
   };
 
   return (
-    <div className="fixed top-0 z-[1000] w-full h-full">
+    <div className="absolute top-0 z-[10] w-full h-full">
       <Excalidraw
         renderTopRightUI={() => (
           <>
-            <span className="hover:bg-slate-200 p-2 rounded-sm" title="submit">
-              <FaCheck onClick={exportImg} />
-            </span>
-
             <span
-              onClick={() => {
-                closeWhiteboardDialog();
-              }}
-              className="hover:bg-slate-200 p-2 absolute right-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-              <Cross2Icon />
+              className="hover:bg-slate-200 text-green-500 p-2 rounded-sm"
+              title="提交">
+              <FaCheck onClick={exportImg} />
             </span>
           </>
         )}
