@@ -19,6 +19,12 @@ import { FaTrashAlt, FaHammer } from "react-icons/fa";
 import classNames from "classnames";
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./ui/accordion";
 
 interface Props {
   settings: Settings;
@@ -83,142 +89,150 @@ function PromptPanel({ settings, setSettings }: Props) {
   };
 
   return (
-    <div className="relative border-t mt-2 py-2">
-      <h1 className=" text-slate-500 font-bold text-sm">预设列表</h1>
-      <div className="grid grid-cols-2 gap-4 my-2">
-        {promptList.map((prompt) => {
-          if (prompt.type === settings.generatedCodeConfig) {
-            return (
-              <div
-                key={prompt.id}
-                onClick={async () => {
-                  if (selectedId === prompt.id) {
-                    setSelectedId("");
-                  } else {
-                    setSelectedId(prompt.id);
-                  }
-                }}
-                className={classNames(
-                  "bg-white rounded-lg hover:shadow-lg shadow overflow-hidden h-[230px]",
-                  selectedId === prompt.id
-                    ? "border-2 border-solid border-emerald-500"
-                    : ""
-                )}>
-                <img
-                  className="w-full h-[106px]"
-                  src={prompt.imgUrl}
-                  alt="Placeholder image with various geometric shapes and ANT DESIGN logo"
-                />
-                <div className="p-2 border-t border-gray-200 h-[80px]">
-                  <p className="font-bold">{prompt.name}</p>
-                  <p className="text-gray-700 text-sm line-clamp-2">
-                    {prompt.des}
-                  </p>
-                </div>
-                <div className="flex p-3">
-                  <span
-                    className="mr-2"
-                    onClick={(e) => {
-                      updatePromptHandler(e, prompt.id);
-                    }}>
-                    <FaHammer className="hover:text-emerald-500" />
-                  </span>
-                  <span
+    <div className="relative">
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="item-1">
+          <AccordionTrigger className="text-slate-500 font-bold text-sm">
+            预设列表
+          </AccordionTrigger>
+          <AccordionContent className="space-y-4 flex flex-col">
+            <div className="grid grid-cols-2 gap-4 my-2">
+              {promptList.map((prompt) => {
+                if (prompt.type === settings.generatedCodeConfig) {
+                  return (
+                    <div
+                      key={prompt.id}
+                      onClick={async () => {
+                        if (selectedId === prompt.id) {
+                          setSelectedId("");
+                        } else {
+                          setSelectedId(prompt.id);
+                        }
+                      }}
+                      className={classNames(
+                        "bg-white rounded-lg hover:shadow-lg shadow overflow-hidden h-[230px]",
+                        selectedId === prompt.id
+                          ? "border-2 border-solid border-emerald-500"
+                          : ""
+                      )}>
+                      <img
+                        className="w-full h-[106px]"
+                        src={prompt.imgUrl}
+                        alt="Placeholder image with various geometric shapes and ANT DESIGN logo"
+                      />
+                      <div className="p-2 border-t border-gray-200 h-[80px]">
+                        <p className="font-bold">{prompt.name}</p>
+                        <p className="text-gray-700 text-sm line-clamp-2">
+                          {prompt.des}
+                        </p>
+                      </div>
+                      <div className="flex p-3">
+                        <span
+                          className="mr-2"
+                          onClick={(e) => {
+                            updatePromptHandler(e, prompt.id);
+                          }}>
+                          <FaHammer className="hover:text-emerald-500" />
+                        </span>
+                        <span
+                          onClick={() => {
+                            removePrompt(prompt.id);
+                          }}>
+                          <FaTrashAlt className="hover:text-red-500" />
+                        </span>
+                      </div>
+                    </div>
+                  );
+                } else {
+                  return null;
+                }
+              })}
+              <div className="border-dashed border-2 border-gray-300 p-6 rounded-lg flex justify-center items-center hover:shadow-lg">
+                <Dialog open={showDialog} onOpenChange={setShowDialog}>
+                  <DialogTrigger
+                    className="w-full h-full"
                     onClick={() => {
-                      removePrompt(prompt.id);
+                      setPrompt(cloneDeep(initPrompt));
                     }}>
-                    <FaTrashAlt className="hover:text-red-500" />
-                  </span>
-                </div>
+                    <div>+ Prompt</div>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle className="mb-4">Prompt</DialogTitle>
+                    </DialogHeader>
+                    <div className="flex flex-col space-y-4">
+                      <Label htmlFor="prompt">
+                        <div>prompt example</div>
+                      </Label>
+                      <Textarea
+                        id="prompt"
+                        placeholder="prompt"
+                        value={prompt.prompt}
+                        onChange={(e) => {
+                          setPrompt((s) => ({
+                            ...s,
+                            prompt: e.target.value,
+                          }));
+                        }}></Textarea>
+                    </div>
+                    <div className="flex flex-col space-y-4">
+                      <Label htmlFor="prompt-name">
+                        <div>prompt name</div>
+                      </Label>
+                      <Input
+                        id="prompt-name"
+                        placeholder="prompt name"
+                        value={prompt.name}
+                        onChange={(e) => {
+                          setPrompt((s) => ({
+                            ...s,
+                            name: e.target.value,
+                          }));
+                        }}
+                      />
+                    </div>
+                    <div className="flex flex-col space-y-4">
+                      <Label htmlFor="prompt-des">
+                        <div>prompt description</div>
+                      </Label>
+                      <Input
+                        id="prompt-des"
+                        placeholder="prompt des"
+                        value={prompt.des}
+                        onChange={(e) => {
+                          setPrompt((s) => ({
+                            ...s,
+                            des: e.target.value,
+                          }));
+                        }}
+                      />
+                    </div>
+                    <div className="flex flex-col space-y-4">
+                      <Label htmlFor="prompt-url">
+                        <div>prompt url</div>
+                      </Label>
+                      <Input
+                        id="prompt-url"
+                        placeholder="prompt url"
+                        value={prompt.imgUrl}
+                        onChange={(e) => {
+                          setPrompt((s) => ({
+                            ...s,
+                            imgUrl: e.target.value,
+                          }));
+                        }}
+                      />
+                    </div>
+                    <DialogFooter>
+                      <DialogClose onClick={addPromptHanler}>Save</DialogClose>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
               </div>
-            );
-          } else {
-            return null;
-          }
-        })}
-        <div className="border-dashed border-2 border-gray-300 p-6 rounded-lg flex justify-center items-center hover:shadow-lg">
-          <Dialog open={showDialog} onOpenChange={setShowDialog}>
-            <DialogTrigger
-              className="w-full h-full"
-              onClick={() => {
-                setPrompt(cloneDeep(initPrompt));
-              }}>
-              <div>+ Prompt</div>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle className="mb-4">Prompt</DialogTitle>
-              </DialogHeader>
-              <div className="flex flex-col space-y-4">
-                <Label htmlFor="prompt">
-                  <div>prompt example</div>
-                </Label>
-                <Textarea
-                  id="prompt"
-                  placeholder="prompt"
-                  value={prompt.prompt}
-                  onChange={(e) => {
-                    setPrompt((s) => ({
-                      ...s,
-                      prompt: e.target.value,
-                    }));
-                  }}></Textarea>
-              </div>
-              <div className="flex flex-col space-y-4">
-                <Label htmlFor="prompt-name">
-                  <div>prompt name</div>
-                </Label>
-                <Input
-                  id="prompt-name"
-                  placeholder="prompt name"
-                  value={prompt.name}
-                  onChange={(e) => {
-                    setPrompt((s) => ({
-                      ...s,
-                      name: e.target.value,
-                    }));
-                  }}
-                />
-              </div>
-              <div className="flex flex-col space-y-4">
-                <Label htmlFor="prompt-des">
-                  <div>prompt description</div>
-                </Label>
-                <Input
-                  id="prompt-des"
-                  placeholder="prompt des"
-                  value={prompt.des}
-                  onChange={(e) => {
-                    setPrompt((s) => ({
-                      ...s,
-                      des: e.target.value,
-                    }));
-                  }}
-                />
-              </div>
-              <div className="flex flex-col space-y-4">
-                <Label htmlFor="prompt-url">
-                  <div>prompt url</div>
-                </Label>
-                <Input
-                  id="prompt-url"
-                  placeholder="prompt url"
-                  value={prompt.imgUrl}
-                  onChange={(e) => {
-                    setPrompt((s) => ({
-                      ...s,
-                      imgUrl: e.target.value,
-                    }));
-                  }}
-                />
-              </div>
-              <DialogFooter>
-                <DialogClose onClick={addPromptHanler}>Save</DialogClose>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-        </div>
-      </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 }

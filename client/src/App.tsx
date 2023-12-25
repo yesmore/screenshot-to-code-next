@@ -360,13 +360,13 @@ function App() {
                       "scanning relative": appState === AppState.CODING,
                     })}>
                     <img
-                      className="w-[340px] border border-gray-200 rounded-md"
+                      className="w-[340px] border hover:shadow border-gray-100 rounded-md"
                       src={referenceImages[0]}
                       alt="Reference"
                     />
                   </div>
                   <div className="text-gray-400 uppercase text-sm text-center mt-1">
-                    Original Screenshot
+                    原图
                   </div>
                 </div>
                 <div className="bg-gray-400 px-4 py-2 rounded text-sm hidden">
@@ -384,18 +384,25 @@ function App() {
               </div>
             </>
           )}
-          <PromptPanel settings={settings} setSettings={setSettings} />
-          <div className="space-y-4 bg-slate-200 p-4 rounded dark:text-white dark:bg-slate-800">
-            🎉 每日提供 <strong>$2</strong> 公用额度免费使用，需要更多额度请前往{" "}
-            <a
-              className=" text-cyan-600 font-bold"
-              href="https://shop.taoist.fun/buy/54"
-              target="__blank">
-              此处获取
-            </a>
-            。
-          </div>
 
+          {
+            <HistoryDisplay
+              history={appHistory}
+              currentVersion={currentVersion}
+              revertToVersion={(index) => {
+                if (
+                  index < 0 ||
+                  index >= appHistory.length ||
+                  !appHistory[index]
+                )
+                  return;
+                setCurrentVersion(index);
+                setGeneratedCode(appHistory[index].code);
+              }}
+              shouldDisableReverts={appState === AppState.CODING}
+            />
+          }
+          <PromptPanel settings={settings} setSettings={setSettings} />
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
               <AccordionTrigger className="text-slate-500 font-bold text-sm">
@@ -415,23 +422,16 @@ function App() {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-          {
-            <HistoryDisplay
-              history={appHistory}
-              currentVersion={currentVersion}
-              revertToVersion={(index) => {
-                if (
-                  index < 0 ||
-                  index >= appHistory.length ||
-                  !appHistory[index]
-                )
-                  return;
-                setCurrentVersion(index);
-                setGeneratedCode(appHistory[index].code);
-              }}
-              shouldDisableReverts={appState === AppState.CODING}
-            />
-          }
+          <div className="space-y-4 bg-slate-200 p-4 mt-2 mb-3 rounded dark:text-white dark:bg-slate-800">
+            🎉 每日提供 <strong>$2</strong> 公用额度免费使用，需要更多额度请前往{" "}
+            <a
+              className=" text-cyan-600 font-bold"
+              href="https://shop.taoist.fun/buy/54"
+              target="__blank">
+              此处获取
+            </a>
+            。
+          </div>
         </div>
       </div>
 

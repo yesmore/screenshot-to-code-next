@@ -29,7 +29,7 @@ export default function HistoryDisplay({
 
   return renderedHistory.length === 0 ? null : (
     <div className="flex flex-col h-screen">
-      <h1 className="font-bold mb-2">Versions</h1>
+      <h1 className="mb-2 text-slate-500 font-bold">版本记录</h1>
       <ul className="space-y-0 flex flex-col-reverse">
         {renderedHistory.map((item, index) => (
           <li key={index}>
