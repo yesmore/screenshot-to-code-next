@@ -13,6 +13,12 @@ import { Settings } from "../types";
 import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./ui/accordion";
 
 interface Props {
   settings: Settings;
@@ -125,6 +131,43 @@ function SettingsDialog({ settings, setSettings }: Props) {
             }
           />
         </div>
+
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="text-slate-600 font-bold">
+              Theme Settings
+            </AccordionTrigger>
+            <AccordionContent className="space-y-4 flex flex-col">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="app-theme">
+                  <div className=" text-sm">App Theme</div>
+                </Label>
+                <div>
+                  <button
+                    className="flex rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50t"
+                    onClick={() => {
+                      document
+                        .querySelector("div.mt-2")
+                        ?.classList.toggle("dark"); // enable dark mode for sidebar
+                      document.body.classList.toggle("dark");
+                      document
+                        .querySelector('div[role="presentation"]')
+                        ?.classList.toggle("dark"); // enable dark mode for upload container
+
+                      let draw = document.querySelector(".excalidraw");
+                      if (draw?.classList.contains("theme--dark")) {
+                        draw?.classList.remove("theme--dark");
+                      } else {
+                        draw?.classList.add("theme--dark");
+                      }
+                    }}>
+                    Toggle dark mode
+                  </button>
+                </div>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
 
         <DialogFooter>
           <DialogClose>Save</DialogClose>
