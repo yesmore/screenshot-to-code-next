@@ -50,26 +50,19 @@ function SettingsDialog({ settings, setSettings }: Props) {
         </div> */}
         <div className="flex flex-col space-y-4">
           <div className="space-y-4 bg-slate-200 p-4 rounded dark:text-white dark:bg-slate-800">
-            🎉 每日提供 <strong>$2</strong> 额度免费使用，需要更多额度请前往{" "}
+            🎉 每日提供 <strong>$2</strong> 公用额度免费使用，需要更多额度请前往{" "}
             <a
               className=" text-cyan-600 font-bold"
-              href="https://open.taoist.fun"
+              href="https://shop.taoist.fun/buy/54"
               target="__blank">
-              Taoist API
+              此处购买
             </a>
-            .
+            。
           </div>
           <Label htmlFor="openai-api-key">
             <div className=" text-slate-600 font-bold">OpenAI API key</div>
             <div className="font-light mt-2 leading-relaxed text-slate-400 text-xs">
-              仅存储在你的本地浏览器中。没有 GPT-4 Key ? 试试{" "}
-              <a
-                className=" text-cyan-600 font-bold"
-                href="https://open.taoist.fun"
-                target="__blank">
-                Taoist API
-              </a>
-              &nbsp;代理，限时超低比例充值，支持 GPT-4 Vision 模型
+              在此处填写激活 sk-xxxx，仅存储在你的本地浏览器中。
             </div>
           </Label>
 
