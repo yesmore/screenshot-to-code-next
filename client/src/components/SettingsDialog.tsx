@@ -66,16 +66,16 @@ function SettingsDialog({ settings, setSettings }: Props) {
             。
           </div>
           <Label htmlFor="openai-api-key">
-            <div className=" text-slate-600 font-bold">OpenAI API key</div>
+            <div className=" text-slate-600 font-bold">Access key</div>
             <div className="font-light mt-2 leading-relaxed text-slate-400 text-xs">
-              在此处填写激活 sk-xxxx，仅存储在你的本地浏览器中。
+              在此处填写激活码 sk-xxxx，仅存储在你的本地浏览器中。
             </div>
           </Label>
 
           <Input
             className=" text-slate-400 placeholder:text-slate-400"
             id="openai-api-key"
-            placeholder="OpenAI API key"
+            placeholder="Access key"
             value={settings.openAiApiKey || ""}
             onChange={(e) =>
               setSettings((s) => ({
