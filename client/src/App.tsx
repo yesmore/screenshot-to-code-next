@@ -257,8 +257,8 @@ function App() {
 
   return (
     <div className="dark:bg-black dark:text-white h-full">
-      <div className="lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:w-96 lg:flex-col">
-        <div className="flex grow flex-col gap-y-2 overflow-y-auto border-r border-gray-200 bg-white px-6 dark:bg-zinc-950 dark:text-white">
+      <div className="md:fixed md:inset-y-0 md:z-40 md:flex md:w-96 md:flex-col">
+        <div className="flex grow flex-col gap-y-2 overflow-y-auto border-r border-gray-100 bg-white px-6 dark:bg-zinc-950 dark:text-white">
           <div className="flex items-center justify-between mt-5 mb-2">
             <img src="/logo.png" width="30" height="30" alt="logo" />
             <h1 className="ml-2 text-2xl font-semibold bg-gradient-to-r from-slate-600 via-slate-500 to-slate-400 bg-clip-text text-transparent">
@@ -435,7 +435,7 @@ function App() {
         </div>
       </div>
 
-      <main className="lg:ml-96 relative h-[100vh]">
+      <main className="md:ml-96 relative h-screen">
         {appState === AppState.INITIAL && (
           <div
             onClick={() => {
@@ -470,7 +470,7 @@ function App() {
 
         {(appState === AppState.CODING || appState === AppState.CODE_READY) &&
           showPreview && (
-            <div className="ml-4 absolute top-5 z-[10] w-[80%] ml-[10%]">
+            <div className="mt-4 z-[10] w-[100%]">
               <Tabs
                 defaultValue={
                   settings.generatedCodeConfig ==

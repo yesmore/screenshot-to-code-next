@@ -154,12 +154,12 @@ function SettingsDialog({ settings, setSettings }: Props) {
                         .querySelector('div[role="presentation"]')
                         ?.classList.toggle("dark"); // enable dark mode for upload container
 
-                      let draw = document.querySelector(".excalidraw");
-                      if (draw?.classList.contains("theme--dark")) {
-                        draw?.classList.remove("theme--dark");
-                      } else {
-                        draw?.classList.add("theme--dark");
-                      }
+                      // let draw = document.querySelector(".excalidraw");
+                      // if (draw?.classList.contains("theme--dark")) {
+                      //   draw?.classList.remove("theme--dark");
+                      // } else {
+                      //   draw?.classList.add("theme--dark");
+                      // }
                     }}>
                     Toggle dark mode
                   </button>
