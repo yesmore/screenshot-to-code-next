@@ -55,7 +55,7 @@ function SettingsDialog({ settings, setSettings }: Props) {
               className=" text-cyan-600 font-bold"
               href="https://shop.taoist.fun/buy/54"
               target="__blank">
-              此处购买
+              此处获取
             </a>
             。
           </div>

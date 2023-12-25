@@ -261,7 +261,7 @@ function App() {
         <div className="flex grow flex-col gap-y-2 overflow-y-auto border-r border-gray-200 bg-white px-6 dark:bg-zinc-950 dark:text-white">
           <div className="flex items-center justify-between mt-5 mb-2">
             <h1 className="text-2xl font-semibold bg-gradient-to-r from-slate-600 via-slate-500 to-slate-400 bg-clip-text text-transparent">
-              图码
+              Codify
             </h1>
             <div className="flex">
               {appState === AppState.CODE_READY && (
@@ -390,7 +390,7 @@ function App() {
               className=" text-cyan-600 font-bold"
               href="https://shop.taoist.fun/buy/54"
               target="__blank">
-              此处购买
+              此处获取
             </a>
             。
           </div>
