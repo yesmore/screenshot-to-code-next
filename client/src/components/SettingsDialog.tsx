@@ -79,7 +79,7 @@ function SettingsDialog({ settings, setSettings }: Props) {
             }
           />
 
-          {
+          {/* {
             <>
               <Label htmlFor="openai-api-key">
                 <div className=" text-slate-600 font-bold">
@@ -104,7 +104,7 @@ function SettingsDialog({ settings, setSettings }: Props) {
                 }
               />
             </>
-          }
+          } */}
         </div>
 
         <div className="flex items-center space-x-2">
