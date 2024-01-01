@@ -1,10 +1,11 @@
 "use client";
+
 import { useEffect, useRef, useState } from "react";
-import ImageUpload from "./components/ImageUpload";
-import CodePreview from "./components/CodePreview";
-import Preview from "./components/Preview";
+import ImageUpload from "./layouts/ImageUpload";
+import CodePreview from "./layouts/CodePreview";
+import Preview from "./layouts/Preview";
 import { CodeGenerationParams, generateCode } from "./generateCode";
-import Spinner from "./components/Spinner";
+import Spinner from "./layouts/Spinner";
 import classNames from "classnames";
 import {
   FaCode,
@@ -15,39 +16,32 @@ import {
   FaCloudUploadAlt,
 } from "react-icons/fa";
 
-import { Switch } from "./components/ui/switch";
-import { Button } from "./components/ui/button";
-import { Textarea } from "./components/ui/textarea";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
-import SettingsDialog from "./components/SettingsDialog";
+import { Switch } from "./shared/switch";
+import { Button } from "./shared/button";
+import { Textarea } from "./shared/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./shared/tabs";
+import SettingsDialog from "./layouts/SettingsDialog";
 import { Settings, EditorTheme, AppState, GeneratedCodeConfig } from "./types";
-import { IS_RUNNING_ON_CLOUD } from "./config";
-import OnboardingNote from "./components/OnboardingNote";
-import { usePersistedState } from "./hooks/usePersistedState";
-// import { UrlInputSection } from "./components/UrlInputSection";
+import { usePersistedState } from "../lib/hooks/usePersistedState";
 import html2canvas from "html2canvas";
-import { USER_CLOSE_WEB_SOCKET_CODE } from "./constants";
-import CodeTab from "./components/CodeTab";
-import OutputSettingsSection from "./components/OutputSettingsSection";
-import { History } from "./components/history/history_types";
-import HistoryDisplay from "./components/history/HistoryDisplay";
-import { extractHistoryTree } from "./components/history/utils";
+import CodeTab from "./layouts/CodeTab";
+import OutputSettingsSection from "./layouts/OutputSettingsSection";
+import { History } from "./history/history_types";
+import HistoryDisplay from "./history/HistoryDisplay";
+import { extractHistoryTree } from "./history/utils";
 import toast from "react-hot-toast";
-import PromptPanel from "./components/PromptPanel";
+import PromptPanel from "./layouts/PromptPanel";
 
-import NativePreview from "./components/NativeMobile";
-import Header from "./components/Header";
+import NativePreview from "./layouts/NativeMobile";
+import Header from "./layouts/Header";
 
 import dynamic from "next/dynamic";
-import DemoVide from "./components/DemoVideo";
-import AccessCode from "./components/AccessCode";
+import DemoVide from "./layouts/DemoVideo";
+import AccessCode from "./layouts/AccessCode";
 
-const Whiteboard = dynamic(
-  async () => await import("./components/Whiteboard"),
-  {
-    ssr: false,
-  }
-);
+const Whiteboard = dynamic(async () => await import("./layouts/Whiteboard"), {
+  ssr: false,
+});
 
 const IS_OPENAI_DOWN = false;
 
@@ -283,7 +277,7 @@ ${error.stack}
 
   return (
     <div className="dark:bg-black dark:text-white h-full">
-      <div className="lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:w-96 lg:flex-col">
+      <div className="md:fixed md:inset-y-0 md:z-40 md:flex md:w-96 md:flex-col">
         <div className="flex grow flex-col gap-y-2 overflow-y-auto border-r border-gray-200 bg-white px-6 dark:bg-zinc-950 dark:text-white">
           <div className="bg-white flex justify-between p-2 pl-4 border-b-[1px] border-r-[1px] fixed left-0 lg:w-96 z-[49]">
             <Header />
@@ -345,6 +339,7 @@ ${error.stack}
                       停止
                     </Button>
                   </div>
+                  <CodePreview code={generatedCode} />
                 </div>
               )}
 
@@ -358,7 +353,7 @@ ${error.stack}
                     />
                     <div className="flex justify-between items-center gap-x-2">
                       <div className="font-500 text-xs text-slate-700 dark:text-white">
-                        Include screenshot of current version?
+                        是否包括当前版本的屏幕截图？
                       </div>
                       <Switch
                         checked={shouldIncludeResultImage}
@@ -433,7 +428,7 @@ ${error.stack}
             "absolute left-[50%] -ml-[300px] z-[4] flex flex-col justify-center items-center gap-y-10 w-[600px] top-32",
             {"hidden": !showImageUpload}
           )} */}
-      <main className="lg:ml-96 relative h-full">
+      <main className="lg:ml-96 relative h-screen">
         <div
           className={classNames("h-full", {
             hidden: !(appState === AppState.INITIAL),
@@ -471,12 +466,7 @@ ${error.stack}
 
         {(appState === AppState.CODING || appState === AppState.CODE_READY) &&
           showPreview && (
-            <div className="ml-4 absolute top-5 z-[10] w-[80%] ml-[10%]">
-              {appState === AppState.CODING && (
-                <div className="w-[160px] absolute top-20 z-[1] left-[50%] -ml-[80px]">
-                  <CodePreview code={generatedCode} />
-                </div>
-              )}
+            <div className="mt-4 z-[10] w-[100%]">
               <Tabs
                 defaultValue={
                   settings.generatedCodeConfig ==
@@ -543,11 +533,6 @@ ${error.stack}
             </div>
           )}
       </main>
-      {IS_RUNNING_ON_CLOUD && !settings.openAiApiKey && settings.init && (
-        <div className="fixed left-[20px] bottom-[20px] z-[49]">
-          <OnboardingNote />
-        </div>
-      )}
     </div>
   );
 }

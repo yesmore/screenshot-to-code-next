@@ -2,7 +2,7 @@ import { createContext, ReactNode, useState, useEffect, useRef } from "react";
 import { GeneratedCodeConfig } from "../types";
 import { cloneDeep } from "lodash";
 import { v4 as uuidv4 } from "uuid";
-import InitPromptData from "../promptdata";
+import InitPromptData from "../../lib/promptdata";
 
 export type PromptType = {
   id: string;
