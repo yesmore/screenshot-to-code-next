@@ -84,7 +84,7 @@ async function useGeminiResponse([messages, callback, params]: Parameters<
     temperature: 0,
     topK: 32,
     topP: 1,
-    maxOutputTokens: 30000,
+    maxOutputTokens: 30000, //
   };
 
   const contents = transformData(messages);
