@@ -26,7 +26,7 @@ You can deploy your own version of screenshot-to-code-next to Vercel with one cl
 | ----------------- | -------- | ------------------------------------------------- | --------------------------- |
 | `OPENAI_API_KEY`  | `string` | The API Key to use for the OpenAI completion API. | `sk-xxx`                    |
 | `OPENAI_BASE_URL` | `string` | OpenAI url                                        | `https://api.openai.com/v1` |
-
+| `GEMINI_API_KEY`  | `string` | Apply api：https://ai.google.dev/                 | `AIgfvsahbjigbagha`         |
 
 ## License
 
