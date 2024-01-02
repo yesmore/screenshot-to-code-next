@@ -73,7 +73,8 @@ function App({ Config }: { Config?: FunctionComponent }) {
       mockAiResponse: false,
       promptCode: "",
       init: false,
-      llm: "Gemini",
+      llm: "OpenAi",
+      geminiApiKey: null,
     },
     "setting"
   );

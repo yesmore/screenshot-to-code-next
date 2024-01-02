@@ -70,7 +70,7 @@ function SettingsDialog({ settings, setSettings, Config }: Props) {
           <div className="space-y-4 bg-slate-200 p-4 mt-2 mb-3 rounded dark:text-white dark:bg-slate-800">
             <Label htmlFor="openai-api-key">
               <div className=" text-slate-600 font-bold">
-                {t("Access key")} {t("Only OpenAI model")}
+                {t("Access key")} ({t("Only OpenAI model")})
               </div>
             </Label>
             <Input
