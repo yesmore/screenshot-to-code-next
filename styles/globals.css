@@ -221,3 +221,67 @@ body {
 *::-webkit-scrollbar-thumb:hover {
   background: hsla(0, 0%, 59%, 0.524);
 }
+
+input[type="radio"],
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  margin: -0.3em 0.25em 0 0;
+  padding: 0;
+  width: 1.3em;
+  height: 1.3em;
+  border: 1px solid #ccc;
+  font-size: 0.9em;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+input[type="radio"] {
+  border-radius: 50%;
+}
+
+input[type="radio"]:after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: #000;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: all 0.2s ease;
+  transform-origin: center center;
+  pointer-events: none;
+}
+
+input[type="radio"]:checked:after {
+  width: 0.8em;
+  height: 0.8em;
+  opacity: 1;
+}
+
+input[type="checkbox"] {
+  border-radius: 0.2em;
+}
+
+input[type="checkbox"]:after {
+  content: "\2714";
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  color: #000;
+  font-size: 2.5em;
+  font-family: meiryo, "sans-serif";
+  opacity: 0;
+  transition: all 0.1s ease;
+  transform: translate(-50%, -50%) scale3d(0.2, 0.2, 1);
+  transform-origin: center center;
+}

@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { HTTP_BACKEND_URL } from "../config";
 import { Button } from "../shared/button";
 import { Input } from "../shared/input";
 import { toast } from "react-hot-toast";
@@ -34,7 +33,7 @@ export default function UrlInputSection({
     if (referenceUrl) {
       try {
         setIsLoading(true);
-        const response = await fetch(`${HTTP_BACKEND_URL}/api/screenshot`, {
+        const response = await fetch(`${"HTTP_BACKEND_URL"}/api/screenshot`, {
           method: "POST",
           body: JSON.stringify({
             url: referenceUrl,

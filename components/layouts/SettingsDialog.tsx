@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { FunctionComponent } from "react";
 import {
   Dialog,
   DialogClose,
@@ -14,19 +14,29 @@ import { Settings } from "../types";
 import { Switch } from "../shared/switch";
 import { Label } from "../shared/label";
 import { Input } from "../shared/input";
-import AccessCode from "./AccessCode";
-import Accordion, {
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "../shared/accordion";
+
+import { useTranslation } from "react-i18next";
+import i18n from "@/next-i18next.config";
+import Button from "../shared/button";
 
 interface Props {
   settings: Settings;
   setSettings: React.Dispatch<React.SetStateAction<Settings>>;
+  Config?: FunctionComponent;
 }
 
-function SettingsDialog({ settings, setSettings }: Props) {
+const llm = [
+  {
+    title: "OpenAi",
+  },
+  {
+    title: "Gemini",
+  },
+];
+
+function SettingsDialog({ settings, setSettings, Config }: Props) {
+  const { t } = useTranslation("draw");
+
   return (
     <Dialog>
       <DialogTrigger className="hover:bg-slate-200 rounded-sm p-2">
@@ -34,7 +44,7 @@ function SettingsDialog({ settings, setSettings }: Props) {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="mb-4 ">Settings</DialogTitle>
+          <DialogTitle className="mb-4 ">{t("Settings")}</DialogTitle>
         </DialogHeader>
 
         {/* <div className="flex items-center space-x-2">
@@ -56,19 +66,73 @@ function SettingsDialog({ settings, setSettings }: Props) {
           />
         </div> */}
         <div className="flex flex-col space-y-4">
-          <AccessCode />
+          <div className="space-y-4 bg-slate-200 p-4 mt-2 mb-3 rounded dark:text-white dark:bg-slate-800">
+            <Label htmlFor="openai-api-key">
+              <div className=" text-slate-600 font-bold">{t("Access key")}</div>
+            </Label>
+            <Input
+              className=" text-slate-400 placeholder:text-slate-400 border-slate-100"
+              id="openai-api-key"
+              placeholder={t("Input your access code")!}
+              value={settings.openAiApiKey || ""}
+              onChange={(e) =>
+                setSettings((s) => ({
+                  ...s,
+                  openAiApiKey: e.target.value,
+                }))
+              }
+            />
+            <div className="flex items-center justify-between">
+              <a href="https://shop.taoist.fun/buy/54" target="_blank">
+                <Button size="sm" variant="secondary">
+                  {t("Buy credits")}
+                </Button>
+              </a>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between space-x-2">
+            <Label htmlFor="openai-api-key">
+              <div className=" text-slate-600 font-bold">
+                {t("Select model")}
+              </div>
+            </Label>
+            <div className="">
+              {llm.map((item) => (
+                <label className="ml-4" key={item.title}>
+                  <input
+                    className=""
+                    type="radio"
+                    name="radio"
+                    value={item.title}
+                    checked={settings.llm === item.title}
+                    onChange={(e) =>
+                      setSettings((s) => ({
+                        ...s,
+                        llm: e.target.value,
+                      }))
+                    }
+                  />
+                  {item.title}
+                </label>
+              ))}
+            </div>
+          </div>
 
           <Label htmlFor="openai-api-key">
-            <div className=" text-slate-600 font-bold">Access key</div>
+            <div className=" text-slate-600 font-bold">
+              {t("OpenAI API Key")}
+            </div>
             <div className="font-light mt-2 leading-relaxed text-slate-400 text-xs">
-              在此处填写激活码 sk-xxxx，仅存储在你的本地浏览器中。
+              {t(
+                "Only stored in your browser. Never stored on servers. Overrides your .env"
+              )}
             </div>
           </Label>
-
           <Input
             className=" text-slate-400 placeholder:text-slate-400"
             id="openai-api-key"
-            placeholder="Access key"
+            placeholder={t("OpenAI API Key")!}
             value={settings.openAiApiKey || ""}
             onChange={(e) =>
               setSettings((s) => ({
@@ -78,22 +142,23 @@ function SettingsDialog({ settings, setSettings }: Props) {
             }
           />
 
-          {
+          {settings.llm !== "Gemini" && (
             <>
               <Label htmlFor="openai-api-key">
                 <div className=" text-slate-600 font-bold">
-                  OpenAI Base URL (可选)
+                  {t("OpenAI Base URL")}
                 </div>
                 <div className="font-light mt-2 leading-relaxed text-slate-400 text-xs">
-                  如果不想使用默认URL，请替换为代理URL，如
-                  https://api.openai.com/v1
+                  {t(
+                    "If you dont want to use the default URL, replace it with the proxy URL."
+                  )}
                 </div>
               </Label>
 
               <Input
                 className=" text-slate-400 placeholder:text-slate-400"
                 id="openai-base-url"
-                placeholder="OpenAI Base URL"
+                placeholder={t("OpenAI Base URL")!}
                 value={settings.openAiBaseURL || ""}
                 onChange={(e) =>
                   setSettings((s) => ({
@@ -103,14 +168,18 @@ function SettingsDialog({ settings, setSettings }: Props) {
                 }
               />
             </>
-          }
+          )}
         </div>
 
         <div className="flex items-center justify-between space-x-2">
           <Label htmlFor="image-generation">
-            <div className=" text-slate-600 font-bold">Mock AI response</div>
+            <div className=" text-slate-600 font-bold">
+              {t("Mock AI response")}
+            </div>
             <div className="font-light mt-2 text-slate-400 text-xs">
-              模拟 AI 生成响应数据 (不消耗额度，仅做效果展示)
+              {t(
+                "Simulate AI to generate response data (without consuming quota, only for effect display)"
+              )}
             </div>
           </Label>
           <Switch
@@ -124,6 +193,8 @@ function SettingsDialog({ settings, setSettings }: Props) {
             }
           />
         </div>
+
+        {Config ? <Config /> : null}
 
         {/* <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="item-1">
@@ -162,8 +233,8 @@ function SettingsDialog({ settings, setSettings }: Props) {
           </AccordionItem>
         </Accordion> */}
 
-        <DialogFooter>
-          <DialogClose>保存</DialogClose>
+        <DialogFooter className="pt-4 border-t border-slate-100">
+          <DialogClose>{t("Save")}</DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>

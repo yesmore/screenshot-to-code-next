@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 // import { PromptImage } from "../../../types";
 import { toast } from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 const baseStyle = {
   flex: 1,
@@ -55,6 +56,7 @@ interface Props {
 }
 
 function ImageUpload({ setReferenceImages }: Props) {
+  const { t } = useTranslation("draw");
   const [files, setFiles] = useState<FileWithPreview[]>([]);
   const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } =
     useDropzone({
@@ -143,10 +145,10 @@ function ImageUpload({ setReferenceImages }: Props) {
       <div {...getRootProps({ style: style as any })}>
         <input {...getInputProps()} />
         <p className="text-slate-700">
-          将屏幕截图拖放到此处, <br />
-          或单击上传本地图片, <br />
-          或从剪贴板粘贴, <br />
-          上传图片大小1MB以内
+          {t("Drag & drop a screenshot here,")} <br />
+          {t("or paste from clipboard,")} <br />
+          {t("or click to upload")} <br />
+          {t("less than 1MB")}
         </p>
       </div>
     </section>

@@ -5,7 +5,6 @@ import { Input } from "../shared/input";
 import { Label } from "../shared/label";
 import useThrottle from "../../lib/hooks/useThrottle";
 import { Progress } from "../shared/progress";
-import { PICO_BACKEND_FORM_SECRET } from "../config";
 
 interface Props {
   settings: Settings;
@@ -52,7 +51,7 @@ function AccessCodeSection({ settings, setSettings }: Props) {
         },
         body: JSON.stringify({
           access_code: accessCode,
-          secret: PICO_BACKEND_FORM_SECRET,
+          secret: "PICO_BACKEND_FORM_SECRET",
         }),
       }
     );

@@ -1,4 +1,5 @@
 "use client";
+
 import { Settings } from "../types";
 
 import {
@@ -26,6 +27,7 @@ import Accordion, {
   AccordionItem,
   AccordionTrigger,
 } from "../shared/accordion";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   settings: Settings;
@@ -33,6 +35,8 @@ interface Props {
 }
 
 function PromptPanel({ settings, setSettings }: Props) {
+  const { t } = useTranslation("draw");
+
   const [selectedId, setSelectedId] = useState<string>("");
   const { promptList, addPrompt, getPromptById, removePrompt } =
     useContext(promptContext);
@@ -94,7 +98,7 @@ function PromptPanel({ settings, setSettings }: Props) {
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1">
           <AccordionTrigger className="text-slate-500 font-bold text-sm">
-            模板列表
+            {t("Prompts")}
           </AccordionTrigger>
           <AccordionContent className="space-y-4 flex flex-col">
             <div className="grid grid-cols-2 gap-4">
@@ -157,15 +161,48 @@ function PromptPanel({ settings, setSettings }: Props) {
                     onClick={() => {
                       setPrompt(cloneDeep(initPrompt));
                     }}>
-                    <div>+ 添加模板</div>
+                    <div>+ {t("Add prompt")}</div>
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
-                      <DialogTitle className="mb-4">Prompt</DialogTitle>
+                      <DialogTitle className="mb-4">{t("Prompt")}</DialogTitle>
                     </DialogHeader>
+
+                    <div className="flex flex-col space-y-4">
+                      <Label htmlFor="prompt-name">
+                        <div>{t("prompt name")}</div>
+                      </Label>
+                      <Input
+                        id="prompt-name"
+                        placeholder={t("prompt name")!}
+                        value={prompt.name}
+                        onChange={(e) => {
+                          setPrompt((s) => ({
+                            ...s,
+                            name: e.target.value,
+                          }));
+                        }}
+                      />
+                    </div>
+                    <div className="flex flex-col space-y-4">
+                      <Label htmlFor="prompt-des">
+                        <div>{t("prompt des")}</div>
+                      </Label>
+                      <Input
+                        id="prompt-des"
+                        placeholder={t("prompt des")!}
+                        value={prompt.des}
+                        onChange={(e) => {
+                          setPrompt((s) => ({
+                            ...s,
+                            des: e.target.value,
+                          }));
+                        }}
+                      />
+                    </div>
                     <div className="flex flex-col space-y-4">
                       <Label htmlFor="prompt">
-                        <div>prompt example</div>
+                        <div>{t("prompt example")}</div>
                       </Label>
                       <Textarea
                         id="prompt"
@@ -179,44 +216,12 @@ function PromptPanel({ settings, setSettings }: Props) {
                         }}></Textarea>
                     </div>
                     <div className="flex flex-col space-y-4">
-                      <Label htmlFor="prompt-name">
-                        <div>prompt name</div>
-                      </Label>
-                      <Input
-                        id="prompt-name"
-                        placeholder="prompt name"
-                        value={prompt.name}
-                        onChange={(e) => {
-                          setPrompt((s) => ({
-                            ...s,
-                            name: e.target.value,
-                          }));
-                        }}
-                      />
-                    </div>
-                    <div className="flex flex-col space-y-4">
-                      <Label htmlFor="prompt-des">
-                        <div>prompt des</div>
-                      </Label>
-                      <Input
-                        id="prompt-des"
-                        placeholder="prompt des"
-                        value={prompt.des}
-                        onChange={(e) => {
-                          setPrompt((s) => ({
-                            ...s,
-                            des: e.target.value,
-                          }));
-                        }}
-                      />
-                    </div>
-                    <div className="flex flex-col space-y-4">
                       <Label htmlFor="prompt-url">
-                        <div>prompt url</div>
+                        <div>{t("prompt url")}</div>
                       </Label>
                       <Input
                         id="prompt-url"
-                        placeholder="prompt url"
+                        placeholder={t("prompt url")!}
                         value={prompt.imgUrl}
                         onChange={(e) => {
                           setPrompt((s) => ({
@@ -227,7 +232,9 @@ function PromptPanel({ settings, setSettings }: Props) {
                       />
                     </div>
                     <DialogFooter>
-                      <DialogClose onClick={addPromptHanler}>Save</DialogClose>
+                      <DialogClose onClick={addPromptHanler}>
+                        {t("Save")}
+                      </DialogClose>
                     </DialogFooter>
                   </DialogContent>
                 </Dialog>

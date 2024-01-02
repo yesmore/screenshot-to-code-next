@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
 import ImageUpload from "./layouts/ImageUpload";
 import CodePreview from "./layouts/CodePreview";
 import Preview from "./layouts/Preview";
@@ -38,6 +38,7 @@ import Header from "./layouts/Header";
 import dynamic from "next/dynamic";
 import DemoVide from "./layouts/DemoVideo";
 import AccessCode from "./layouts/AccessCode";
+import { useTranslation } from "react-i18next";
 
 const Whiteboard = dynamic(async () => await import("./layouts/Whiteboard"), {
   ssr: false,
@@ -45,7 +46,7 @@ const Whiteboard = dynamic(async () => await import("./layouts/Whiteboard"), {
 
 const IS_OPENAI_DOWN = false;
 
-function App() {
+function App({ Config }: { Config?: FunctionComponent }) {
   const [appState, setAppState] = useState<AppState>(AppState.INITIAL);
   const [generatedCode, setGeneratedCode] = useState<string>("");
 
@@ -54,6 +55,8 @@ function App() {
   const [updateInstruction, setUpdateInstruction] = useState("");
   const [showImageUpload, setShowImageUpload] = useState<boolean>(true);
   const [showPreview, setShowPreview] = useState<boolean>(true);
+
+  const { t } = useTranslation("draw");
 
   // Settings
   const [settings, setSettings] = usePersistedState<Settings>(
@@ -70,6 +73,7 @@ function App() {
       mockAiResponse: false,
       promptCode: "",
       init: false,
+      llm: "OpenAi",
     },
     "setting"
   );
@@ -311,7 +315,11 @@ ${error.stack}
                   </span>
                 </>
               )}
-              <SettingsDialog settings={settings} setSettings={setSettings} />
+              <SettingsDialog
+                settings={settings}
+                setSettings={setSettings}
+                Config={Config}
+              />
             </div>
           </div>
 
@@ -336,7 +344,7 @@ ${error.stack}
                     <Button
                       onClick={stop}
                       className="w-full dark:text-white dark:bg-gray-700">
-                      停止
+                      {t("Cancel")}
                     </Button>
                   </div>
                   <CodePreview code={generatedCode} />
@@ -347,13 +355,13 @@ ${error.stack}
                 <div>
                   <div className="grid w-full gap-2">
                     <Textarea
-                      placeholder="Tell the AI what to change..."
+                      placeholder={t("Tell Ai what do you want to modify...")!}
                       onChange={(e) => setUpdateInstruction(e.target.value)}
                       value={updateInstruction}
                     />
                     <div className="flex justify-between items-center gap-x-2">
                       <div className="font-500 text-xs text-slate-700 dark:text-white">
-                        是否包括当前版本的屏幕截图？
+                        {t("Include screenshots of the current version?")}
                       </div>
                       <Switch
                         checked={shouldIncludeResultImage}
@@ -364,7 +372,7 @@ ${error.stack}
                     <Button
                       onClick={doUpdate}
                       className="dark:text-white dark:bg-gray-700">
-                      继续
+                      {t("Update")}
                     </Button>
                   </div>
                 </div>
@@ -384,7 +392,7 @@ ${error.stack}
                     />
                   </div>
                   <div className="text-gray-400 uppercase text-sm text-center mt-1">
-                    原图
+                    {t("Original image")}
                   </div>
                 </div>
                 <div className="bg-gray-400 px-4 py-2 rounded text-sm hidden">
@@ -484,16 +492,16 @@ ${error.stack}
                     ) : (
                       <>
                         <TabsTrigger value="desktop" className="flex gap-x-2">
-                          <FaDesktop /> Desktop
+                          <FaDesktop /> {t("Desktop")}
                         </TabsTrigger>
                         <TabsTrigger value="mobile" className="flex gap-x-2">
-                          <FaMobile /> Mobile
+                          <FaMobile /> {t("Mobile")}
                         </TabsTrigger>
                       </>
                     )}
                     <TabsTrigger value="code" className="flex gap-x-2">
                       <FaCode />
-                      Code
+                      {t("Code")}
                     </TabsTrigger>
                   </TabsList>
                 </div>

@@ -10,9 +10,9 @@ export enum GeneratedCodeConfig {
   BOOTSTRAP = "bootstrap",
   // IONIC_TAILWIND = "ionic_tailwind",
   REACT_ANTD = "react_antd",
-  VUE_TAILWIND = 'vue_tailwind',
-  VUE_ELEMENT = 'vue_element',
-  REACT_NATIVE = 'react_native',
+  VUE_TAILWIND = "vue_tailwind",
+  VUE_ELEMENT = "vue_element",
+  REACT_NATIVE = "react_native",
   // VUE_ELEMENT_SYSTEM_PROMPT
 }
 
@@ -29,6 +29,7 @@ export interface Settings {
   mockAiResponse: boolean;
   promptCode: string;
   init: boolean;
+  llm: string;
 }
 
 export enum AppState {

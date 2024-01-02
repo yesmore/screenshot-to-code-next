@@ -1,6 +1,6 @@
-import { assemblePrompt } from './prompts';
-import { streamingOpenAIResponses } from './llm';
-import { mockComletion } from './mock';
+import { assemblePrompt } from "./prompts";
+import { streamingOpenAIResponses } from "./llm";
+import { mockComletion } from "./mock";
 
 export interface IGenerateCodeParams {
   generationType: string;
@@ -17,59 +17,60 @@ export interface IGenerateCodeParams {
   promptCode: string;
   history: any[];
   mockAiResponse?: boolean;
+  llm: string;
 }
 
 const encoder = new TextEncoder();
 export async function streamGenerateCode(
   params: IGenerateCodeParams,
-  socket: { enqueue: (v: any) => any },
+  socket: { enqueue: (v: any) => any }
 ) {
   function noticeHost(data: Record<any, any>) {
     if (socket.enqueue) {
-        socket.enqueue(encoder.encode(`${JSON.stringify(data)}\n`));
+      socket.enqueue(encoder.encode(`${JSON.stringify(data)}\n`));
     }
   }
-  const generated_code_config = params['generatedCodeConfig'];
+  const generated_code_config = params["generatedCodeConfig"];
   let prompt_messages;
   try {
-    if (params['resultImage']) {
+    if (params["resultImage"]) {
       prompt_messages = assemblePrompt(
-        params['image'],
+        params["image"],
         generated_code_config,
-        params['promptCode'],
-        params['resultImage'],
+        params["promptCode"],
+        params["resultImage"]
       );
     } else {
       prompt_messages = assemblePrompt(
-        params['image'],
+        params["image"],
         generated_code_config,
-        params['promptCode'],
+        params["promptCode"]
       );
     }
   } catch (e) {
     console.log(e);
     noticeHost({
-      type: 'error',
-      value: 'Prompt error!',
+      type: "error",
+      value: "Prompt error!",
     });
   }
 
-  if (params['generationType'] === 'update') {
-    const history = params['history'];
+  if (params["generationType"] === "update") {
+    const history = params["history"];
     history.forEach((item, index) => {
       prompt_messages.push({
-        role: index % 2 === 0 ? 'assistant' : 'user',
+        role: index % 2 === 0 ? "assistant" : "user",
         content: item,
       });
     });
   }
 
   let completion;
-  const SHOULD_MOCK_AI_RESPONSE = params['mockAiResponse'];
+  const SHOULD_MOCK_AI_RESPONSE = params["mockAiResponse"];
   if (SHOULD_MOCK_AI_RESPONSE) {
     completion = await mockComletion((content: any) => {
       noticeHost({
-        type: 'chunk',
+        type: "chunk",
         value: content,
       });
     });
@@ -78,14 +79,14 @@ export async function streamGenerateCode(
       completion = await streamingOpenAIResponses(
         prompt_messages,
         (content: string, event?: string) => {
-          if (event === 'error') {
+          if (event === "error") {
             noticeHost({
-              type: 'error',
+              type: "error",
               value: content,
             });
           } else {
             noticeHost({
-              type: 'chunk',
+              type: "chunk",
               value: content,
             });
           }
@@ -93,24 +94,25 @@ export async function streamGenerateCode(
         {
           openAiApiKey: params.openAiApiKey,
           openAiBaseURL: params.openAiBaseURL,
-        },
+          llm: params.llm,
+        }
       );
     } catch (e) {
       console.log(e);
       noticeHost({
-        type: 'error',
-        value: 'openAI request error!',
+        type: "error",
+        value: "openAI request error!",
       });
     }
   }
   const updated_html = completion;
   noticeHost({
-    type: 'setCode',
+    type: "setCode",
     value: updated_html,
   });
   noticeHost({
-    type: 'status',
-    value: 'Code generation complete.',
+    type: "status",
+    value: "Code generation complete.",
   });
 
   return updated_html;
