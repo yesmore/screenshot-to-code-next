@@ -2,6 +2,7 @@ import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 import zh from "./i18n/zh.json";
+import en from "./i18n/en.json";
 
 i18n
   .use(LanguageDetector)
@@ -9,6 +10,11 @@ i18n
   .init({
     // we init with resources
     resources: {
+      en: {
+        draw: {
+          ...en,
+        },
+      },
       zh: {
         draw: {
           ...zh,

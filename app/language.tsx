@@ -4,8 +4,8 @@ import i18n from "@/next-i18next.config";
 import { useTranslation } from "react-i18next";
 
 const options = [
-  { label: "中文", value: "zh" },
   { label: "English", value: "eh" },
+  { label: "中文", value: "zh" },
 ];
 export default function LanguageConfig() {
   const { t } = useTranslation("draw");

@@ -16,7 +16,6 @@ import { Label } from "../shared/label";
 import { Input } from "../shared/input";
 
 import { useTranslation } from "react-i18next";
-import i18n from "@/next-i18next.config";
 import Button from "../shared/button";
 
 interface Props {
@@ -27,10 +26,12 @@ interface Props {
 
 const llm = [
   {
-    title: "OpenAi",
+    title: "OpenAI",
+    value: "OpenAi",
   },
   {
-    title: "Gemini",
+    title: "Gemini (free)",
+    value: "Gemini",
   },
 ];
 
@@ -99,13 +100,13 @@ function SettingsDialog({ settings, setSettings, Config }: Props) {
             </Label>
             <div className="">
               {llm.map((item) => (
-                <label className="ml-4" key={item.title}>
+                <label className="ml-4" key={item.value}>
                   <input
                     className=""
                     type="radio"
                     name="radio"
-                    value={item.title}
-                    checked={settings.llm === item.title}
+                    value={item.value}
+                    checked={settings.llm === item.value}
                     onChange={(e) =>
                       setSettings((s) => ({
                         ...s,
@@ -119,28 +120,32 @@ function SettingsDialog({ settings, setSettings, Config }: Props) {
             </div>
           </div>
 
-          <Label htmlFor="openai-api-key">
-            <div className=" text-slate-600 font-bold">
-              {t("OpenAI API Key")}
-            </div>
-            <div className="font-light mt-2 leading-relaxed text-slate-400 text-xs">
-              {t(
-                "Only stored in your browser. Never stored on servers. Overrides your .env"
-              )}
-            </div>
-          </Label>
-          <Input
-            className=" text-slate-400 placeholder:text-slate-400"
-            id="openai-api-key"
-            placeholder={t("OpenAI API Key")!}
-            value={settings.openAiApiKey || ""}
-            onChange={(e) =>
-              setSettings((s) => ({
-                ...s,
-                openAiApiKey: e.target.value,
-              }))
-            }
-          />
+          {settings.llm !== "Gemini" && (
+            <>
+              <Label htmlFor="openai-api-key">
+                <div className=" text-slate-600 font-bold">
+                  {t("OpenAI API Key")}
+                </div>
+                <div className="font-light mt-2 leading-relaxed text-slate-400 text-xs">
+                  {t(
+                    "Only stored in your browser. Never stored on servers. Overrides your .env"
+                  )}
+                </div>
+              </Label>
+              <Input
+                className=" text-slate-400 placeholder:text-slate-400"
+                id="openai-api-key"
+                placeholder={t("OpenAI API Key")!}
+                value={settings.openAiApiKey || ""}
+                onChange={(e) =>
+                  setSettings((s) => ({
+                    ...s,
+                    openAiApiKey: e.target.value,
+                  }))
+                }
+              />
+            </>
+          )}
 
           {settings.llm !== "Gemini" && (
             <>
