@@ -54,5 +54,6 @@
   "Drag & drop a screenshot here,": "将屏幕截图拖放到此处",
   "or paste from clipboard,": "或单击上传本地图片,",
   "or click to upload": "或从剪贴板粘贴,",
-  "less than 1MB": "上传图片大小1MB以内"
+  "less than 1MB": "上传图片大小1MB以内",
+  "Only OpenAI model": "仅 OpenAI 模式"
 }
