@@ -35,7 +35,7 @@ function Preview({ code, device, appState, fixBug }: Props) {
     let content = "";
     if (appState === AppState.CODE_READY) {
       var patternHead = /<title[^>]*>((.|[\n\r])*)<\/title>/im; //匹配header
-      const headMatch = throttledCode.match(patternHead);
+      const headMatch = throttledCode?.match(patternHead);
       if (headMatch) {
         const headContent = headMatch[0] + errorIframe;
         content = throttledCode.replace(patternHead, headContent);
