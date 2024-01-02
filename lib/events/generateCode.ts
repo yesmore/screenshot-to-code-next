@@ -18,6 +18,7 @@ export interface IGenerateCodeParams {
   history: any[];
   mockAiResponse?: boolean;
   llm: string;
+  geminiApiKey: string;
 }
 
 const encoder = new TextEncoder();
@@ -95,6 +96,7 @@ export async function streamGenerateCode(
           openAiApiKey: params.openAiApiKey,
           openAiBaseURL: params.openAiBaseURL,
           llm: params.llm,
+          geminiApiKey: params.geminiApiKey,
         }
       );
     } catch (e: any) {

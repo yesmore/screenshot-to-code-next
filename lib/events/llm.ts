@@ -77,7 +77,7 @@ async function useGeminiResponse([messages, callback, params]: Parameters<
   typeof streamingOpenAIResponses
 >) {
   let genAI = new GoogleGenerativeAI(
-    params.openAiApiKey || process.env["GEMINI_API_KEY"]
+    params.geminiApiKey || process.env["GEMINI_API_KEY"]
   );
   const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
   const generationConfig = {
@@ -118,7 +118,12 @@ export async function streamingOpenAIResponses(
     (content: string, event?: string | undefined): void;
     (arg0: string, arg1: string | undefined): void;
   },
-  params: { openAiApiKey: any; openAiBaseURL: any; llm: string }
+  params: {
+    openAiApiKey: any;
+    openAiBaseURL: any;
+    llm: string;
+    geminiApiKey: any;
+  }
 ) {
   if (params.llm === "Gemini") {
     const full_response = await useGeminiResponse([messages, callback, params]);

@@ -30,6 +30,7 @@ export interface Settings {
   promptCode: string;
   init: boolean;
   llm: string;
+  geminiApiKey: string | null;
 }
 
 export enum AppState {

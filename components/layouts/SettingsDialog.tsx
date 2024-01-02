@@ -120,6 +120,33 @@ function SettingsDialog({ settings, setSettings, Config }: Props) {
             </div>
           </div>
 
+          {settings.llm === "Gemini" && (
+            <>
+              <Label htmlFor="gemini-api-key">
+                <div className=" text-slate-600 font-bold">
+                  {t("Gemini API Key")}
+                </div>
+                <div className="font-light mt-2 leading-relaxed text-slate-400 text-xs">
+                  {t(
+                    "Only stored in your browser. Never stored on servers. Overrides your .env"
+                  )}
+                </div>
+              </Label>
+              <Input
+                className=" text-slate-400 placeholder:text-slate-400"
+                id="gemini-api-key"
+                placeholder={t("Gemini API Key")!}
+                value={settings.geminiApiKey || ""}
+                onChange={(e) =>
+                  setSettings((s) => ({
+                    ...s,
+                    geminiApiKey: e.target.value,
+                  }))
+                }
+              />
+            </>
+          )}
+
           {settings.llm !== "Gemini" && (
             <>
               <Label htmlFor="openai-api-key">
