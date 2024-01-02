@@ -97,12 +97,19 @@ export async function streamGenerateCode(
           llm: params.llm,
         }
       );
-    } catch (e) {
-      console.log(e);
-      noticeHost({
-        type: "error",
-        value: "openAI request error!",
-      });
+    } catch (e: any) {
+      console.log("[error]", e);
+      if (e?.message && e.message.includes("该令牌额度已用尽")) {
+        noticeHost({
+          type: "error",
+          value: "额度已用尽",
+        });
+      } else {
+        noticeHost({
+          type: "error",
+          value: "Something wrong",
+        });
+      }
     }
   }
   const updated_html = completion;
