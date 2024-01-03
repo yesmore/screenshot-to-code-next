@@ -129,9 +129,13 @@ function SettingsDialog({ settings, setSettings, Config }: Props) {
                   {t("Gemini API Key")}
                 </div>
                 <div className="font-light mt-2 leading-relaxed text-slate-400 text-xs">
-                  {t(
-                    "Only stored in your browser. Never stored on servers. Overrides your .env"
-                  )}
+                  {t("Apply for your Google key for free, see")}{" "}
+                  <a
+                    className="text-cyan-700"
+                    href="https://ai.google.dev"
+                    target="_blank">
+                    https://ai.google.dev
+                  </a>
                 </div>
               </Label>
               <Input
