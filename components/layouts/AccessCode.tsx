@@ -18,7 +18,7 @@ export default function AccessCode() {
         </a>{" "}
         。
       </p>
-      <p>交流群：634323049</p>
+      <p>交流群：634323049，支持代搭建同款网站</p>
     </div>
   );
 }
